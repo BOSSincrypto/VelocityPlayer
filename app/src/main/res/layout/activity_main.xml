@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+ android:id="@+id/root" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+ <androidx.media3.ui.PlayerView android:id="@+id/player_view" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" app:surface_type="surface_view" app:use_controller="true" app:show_buffering="when_playing" app:resize_mode="fit" />
+ <HorizontalScrollView android:id="@+id/controls_scroll" android:layout_width="match_parent" android:layout_height="wrap_content" android:fillViewport="true">
+  <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="8dp">
+   <Button android:id="@+id/open" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/open_video" />
+   <Button android:id="@+id/rewind" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/rewind_short" android:contentDescription="@string/rewind" />
+   <Button android:id="@+id/forward" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/forward_short" android:contentDescription="@string/forward" />
+   <Button android:id="@+id/speed" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/default_speed" />
+   <Button android:id="@+id/scale" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/fit" />
+   <Button android:id="@+id/fullscreen" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/fullscreen" />
+   <Button android:id="@+id/pip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/pip" />
+  </LinearLayout>
+ </HorizontalScrollView>
+</LinearLayout>

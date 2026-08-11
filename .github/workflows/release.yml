@@ -1,0 +1,38 @@
+name: Android Prerelease
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: main-prerelease
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/wrapper-validation@v4
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build and verify
+        run: |
+          VERSION_CODE=${{ github.run_number }}
+          VERSION_NAME="0.1.0-build.${VERSION_CODE}"
+          ./gradlew --no-daemon -PversionCode="$VERSION_CODE" -PversionName="$VERSION_NAME" testDebugUnitTest lintDebug assembleDebug assembleRelease
+          cp app/build/outputs/apk/debug/app-debug.apk "VelocityPlayer-${VERSION_NAME}-debug.apk"
+          cp app/build/outputs/apk/release/app-release-unsigned.apk "VelocityPlayer-${VERSION_NAME}-release-unsigned.apk"
+          sha256sum VelocityPlayer-*.apk > SHA256SUMS.txt
+          echo "TAG=v0.1.0-build.${VERSION_CODE}" >> "$GITHUB_ENV"
+          echo "VERSION_NAME=${VERSION_NAME}" >> "$GITHUB_ENV"
+      - name: Publish testing prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$TAG" VelocityPlayer-*.apk SHA256SUMS.txt --target "$GITHUB_SHA" --title "$VERSION_NAME" --prerelease --generate-notes --notes "The debug APK is installable for testing and uses a debug key. The release APK is unsigned and is not production-ready or directly installable as a trusted release."

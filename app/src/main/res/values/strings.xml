@@ -1,0 +1,7 @@
+<resources>
+<string name="app_name">VelocityPlayer</string><string name="open_video">Open video</string>
+<string name="speed">Speed</string><string name="fit">Fit</string><string name="fill">Fill</string>
+<string name="fullscreen">Fullscreen</string><string name="pip">Picture in picture</string>
+<string name="rewind">Back 10 seconds</string><string name="forward">Forward 10 seconds</string>
+<string name="rewind_short">−10</string><string name="forward_short">+10</string><string name="default_speed">1×</string><string name="speed_value">%1$.2g×</string>
+</resources>
